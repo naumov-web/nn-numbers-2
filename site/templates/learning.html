@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Распознавание цифр</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="static/css/main.css">
+        <script type="text/javascript" src="static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="static/js/learning.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center">Обучение нейронной сети</h1>
+                    <div class="main-menu text-center">
+                        <a href="/learning" class="btn btn-secondary">
+                            Обучение нейронной сети
+                        </a>
+                        <a href="/parse" class="btn btn-secondary">
+                            Распознавание цифр
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form action="" class="border border-secondary form">
+                        <h2 class="text-center">Добавление примера</h2>
+                        <div class="text-center">
+                            <div>
+                                <label>Изображение цифры</label>
+                            </div>
+                            <canvas id="the_stage" class="border border-success" width="200px" height="200px"></canvas>
+                        </div>
+                        <div class="text-center">
+                            <div>
+                                <label>Правильный ответ</label>
+                            </div>
+                            <label for="right-0">
+                                <input type="radio" name="right" id="right-0" required value="0" /> 0
+                            </label>
+                            <label for="right-1">
+                                <input type="radio" name="right" id="right-1" required value="1" /> 1
+                            </label>
+                            <label for="right-2">
+                                <input type="radio" name="right" id="right-2" required value="2" /> 2
+                            </label>
+                            <label for="right-3">
+                                <input type="radio" name="right" id="right-3" required value="3" /> 3
+                            </label>
+                            <label for="right-4">
+                                <input type="radio" name="right" id="right-4" required value="4" /> 4
+                            </label>
+                            <label for="right-5">
+                                <input type="radio" name="right" id="right-5" required value="5" /> 5
+                            </label>
+                            <label for="right-6">
+                                <input type="radio" name="right" id="right-6" required value="6" /> 6
+                            </label>
+                            <label for="right-7">
+                                <input type="radio" name="right" id="right-7" required value="7" /> 7
+                            </label>
+                            <label for="right-8">
+                                <input type="radio" name="right" id="right-8" required value="8" /> 8
+                            </label>
+                            <label for="right-9">
+                                <input type="radio" name="right" id="right-9" required value="9" /> 9
+                            </label>
+                        </div>
+                        <div class="canvas-controls text-center">
+                            <button type="button" class="btn btn-success btn-canvas-save" onclick="saveImg();">
+                                Сохранить
+                            </button>
+                            <button type="button" class="btn btn-warning btn-canvas-clear" onclick="clearCanvas();">
+                                Очистить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

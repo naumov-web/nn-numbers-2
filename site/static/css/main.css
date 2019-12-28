@@ -1,0 +1,18 @@
+h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.main-menu {
+    padding: 20px;
+}
+.form {
+    padding: 20px;
+}
+#the_stage {
+    margin-left: auto;
+    margin-right: auto;
+}
+.canvas-controls {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

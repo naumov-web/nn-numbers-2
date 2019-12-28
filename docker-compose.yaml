@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+
+  python:
+    container_name: nn_2_python
+    build:
+      context: .
+      dockerfile: deployment/local/docker/python/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/var/python-project
