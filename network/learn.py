@@ -14,7 +14,7 @@ import pickle
 BASE_SIZE = 80
 MAX_SIZE = 100
 INIT_LR = 0.01
-EPOCHS = 100
+EPOCHS = 80
 ANGLES = [-20, -15, -10, -5, 5, 10, 15, 20]
 SCALES_X = [0.8, 0.9, 1.1, 1.2]
 SCALES_Y = [0.8, 0.9, 1.1, 1.2]
@@ -134,7 +134,7 @@ for file_path in all_files:
 
 data = np.array(data, dtype="float") / 255.0
 labels = np.array(labels)
-print(data.shape)
+
 lb = preprocessing.LabelBinarizer()
 (trainX, testX, trainY, testY) = train_test_split(data,
     labels, test_size=0.2, random_state=50)
@@ -146,6 +146,7 @@ nn_model = Sequential()
 nn_model.add(Dense(MAX_SIZE * MAX_SIZE, input_shape=(MAX_SIZE * MAX_SIZE,), kernel_initializer="normal", activation="relu"))
 nn_model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
 nn_model.compile(loss="categorical_crossentropy", optimizer="SGD", metrics=["accuracy"])
+
 nn_model.fit(trainX, trainY, validation_data=(testX, testY),
      epochs=EPOCHS, batch_size=32)
 

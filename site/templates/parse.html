@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Распознавание цифр - Обучение</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="static/css/main.css">
+        <script type="text/javascript" src="static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="static/js/learning.js"></script>
+        <script type="text/javascript" src="static/js/parse.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center">Распознавание цифр</h1>
+                    <div class="main-menu text-center">
+                        <a href="/learning" class="btn btn-secondary">
+                            Обучение нейронной сети
+                        </a>
+                        <a href="/parse" class="btn btn-secondary">
+                            Распознавание цифр
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form action="" class="border border-secondary form">
+                        <div class="text-center">
+                            <div>
+                                <label>Изображение цифры</label>
+                            </div>
+                            <canvas id="the_stage" class="border border-success" width="200px" height="200px"></canvas>
+                        </div>
+                        <div class="canvas-controls text-center">
+                            <button type="button" class="btn btn-success btn-canvas-save" onclick="parseImg();">
+                                Проверить
+                            </button>
+                            <button type="button" class="btn btn-warning btn-canvas-clear" onclick="clearCanvas();">
+                                Очистить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
