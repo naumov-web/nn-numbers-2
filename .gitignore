@@ -1,1 +1,3 @@
 site/__pycache__
+network/clever_model.bin
+network/labels.bin
