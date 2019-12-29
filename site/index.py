@@ -2,6 +2,7 @@ __author__ = 'Naumov-Web'
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 from models import Image as ImageModel
+from image_parser import Parser as ImageParser
 from PIL import Image
 import numpy as np
 from keras.models import load_model
@@ -49,7 +50,10 @@ def check_image():
     image_model = ImageModel()
     temp_path = image_model.save_temp(image_bin)
 
-    return jsonify({'success': 1})
+    parser = ImageParser()
+    result = parser.parse(temp_path)
+
+    return jsonify(result)
 
 @app.route("/save-image", methods=["POST"])
 def save_image():

@@ -1,4 +1,3 @@
-import argparse
 from PIL import Image
 import numpy as np
 from keras.models import load_model
@@ -58,6 +57,7 @@ class Parser(object):
     def parse(self, file_path):
         image = self.process_image(file_path)
 
+        K.clear_session()
         model_path = os.path.dirname(os.path.realpath(__file__)) + '/../network/clever_model.bin'
         labels_path = os.path.dirname(os.path.realpath(__file__)) + '/../network/labels.bin'
         model = load_model(model_path)
@@ -71,19 +71,6 @@ class Parser(object):
 
         i = preds.argmax(axis=1)[0]
         label = lb.classes_[i]
-        probability = preds[0][i]
+        probability = preds[0][i] * 100
 
-        K.clear_session()
-
-        return {'label': label, 'probability': probability}
-
-ap = argparse.ArgumentParser()
-ap.add_argument("-f", "--file", required=True,
-    help="File for parsing")
-args = vars(ap.parse_args())
-
-parser = Parser()
-result = parser.parse(args['file'])
-
-print('Найдено число: {}'.format(result['label']))
-print('Вероятность: {}'.format(result['probability']))
+        return {'label': label, 'probability': int(probability)}

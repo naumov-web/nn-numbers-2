@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <form action="" class="border border-secondary form">
+                    <form action="" class="border border-secondary form parse-form">
                         <div class="text-center">
                             <div>
                                 <label>Изображение цифры</label>
@@ -34,7 +34,7 @@
                             <canvas id="the_stage" class="border border-success" width="200px" height="200px"></canvas>
                         </div>
                         <div class="canvas-controls text-center">
-                            <button type="button" class="btn btn-success btn-canvas-save" onclick="parseImg();">
+                            <button type="button" class="btn btn-success btn-parse" onclick="parseImg();">
                                 Проверить
                             </button>
                             <button type="button" class="btn btn-warning btn-canvas-clear" onclick="clearCanvas();">
@@ -42,6 +42,19 @@
                             </button>
                         </div>
                     </form>
+                    <div class="border border-secondary form">
+                        <h3>Результаты распознавания</h3>
+                        <div>
+                            <label class="found-digit">
+                                Найденная цифра: <span></span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="found-digit-percent">
+                                Вероятность совпадения: <span></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
