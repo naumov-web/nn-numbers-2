@@ -13,11 +13,31 @@ import pickle
 
 BASE_SIZE = 80
 MAX_SIZE = 100
-INIT_LR = 0.01
-EPOCHS = 80
+INIT_LR = 0.001
+EPOCHS = 70
 ANGLES = [-20, -15, -10, -5, 5, 10, 15, 20]
-SCALES_X = [0.8, 0.9, 1.1, 1.2]
-SCALES_Y = [0.8, 0.9, 1.1, 1.2]
+SCALES_X = [0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2]
+SCALES_Y = [0.8, 0.85, 0.9, 0.95, 1.05, 1.1, 1.15, 1.2]
+
+def get_model_1():
+    nn_model = Sequential()
+
+    nn_model.add(
+        Dense(MAX_SIZE * MAX_SIZE, input_shape=(MAX_SIZE * MAX_SIZE,), kernel_initializer="normal", activation="relu"))
+    nn_model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
+    nn_model.compile(loss="categorical_crossentropy", optimizer="SGD", metrics=["accuracy"])
+
+    return nn_model
+
+def get_model_2():
+    sgd = SGD(lr=INIT_LR)
+    nn_model = Sequential()
+    nn_model.add(
+        Dense(MAX_SIZE * MAX_SIZE, input_shape=(MAX_SIZE * MAX_SIZE,), kernel_initializer="normal", activation="relu"))
+    nn_model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
+    nn_model.compile(loss="categorical_crossentropy", optimizer=sgd, metrics=["accuracy"])
+
+    return nn_model
 
 def transform_image(image):
     image_bin = image.resize((MAX_SIZE, MAX_SIZE))
@@ -85,7 +105,7 @@ def augment(file_path):
 
     for scale_x in SCALES_X:
         width, height = image.size
-        new_image = image.resize((int(width * scale_x), height))
+        new_image = image.resize((int(width * scale_x), int(1 * height)))
         new_image = transform_image(new_image)
         imgdata = list(new_image.getdata())
         img_array = np.array([(255.0 - x) / 255.0 for x in imgdata])
@@ -93,7 +113,7 @@ def augment(file_path):
 
     for scale_y in SCALES_Y:
         width, height = image.size
-        new_image = image.resize((width, int(scale_y * height)))
+        new_image = image.resize((int(width * 1), int(scale_y * height)))
         new_image = transform_image(new_image)
         imgdata = list(new_image.getdata())
         img_array = np.array([(255.0 - x) / 255.0 for x in imgdata])
@@ -142,10 +162,7 @@ trainY = lb.fit_transform(trainY)
 testY = lb.transform(testY)
 
 print("[INFO] Обучение нейронной сети...")
-nn_model = Sequential()
-nn_model.add(Dense(MAX_SIZE * MAX_SIZE, input_shape=(MAX_SIZE * MAX_SIZE,), kernel_initializer="normal", activation="relu"))
-nn_model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
-nn_model.compile(loss="categorical_crossentropy", optimizer="SGD", metrics=["accuracy"])
+nn_model = get_model_2()
 
 nn_model.fit(trainX, trainY, validation_data=(testX, testY),
      epochs=EPOCHS, batch_size=32)
