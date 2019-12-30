@@ -14,7 +14,7 @@ import pickle
 BASE_SIZE = 64
 MAX_SIZE = 80
 INIT_LR = 0.1
-EPOCHS = 10
+EPOCHS = 8
 ANGLES = [-20, -15, -10, -5, 5, 10, 15, 20]
 SCALES_X = [0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2]
 SCALES_Y = [0.8, 0.85, 0.9, 0.95, 1.05, 1.1, 1.15, 1.2]
