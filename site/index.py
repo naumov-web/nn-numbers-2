@@ -10,10 +10,6 @@ import pickle
 import base64
 import os
 
-# Constants
-BASE_SIZE = 80
-MAX_SIZE = 100
-
 app = Flask(__name__)
 
 model_path = os.path.dirname(os.path.realpath(__file__)) + '/../network/clever_model.bin'

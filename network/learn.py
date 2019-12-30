@@ -7,14 +7,14 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Conv2D, Flatten, Dropout
 from keras.optimizers import SGD
 import pickle
 
-BASE_SIZE = 80
-MAX_SIZE = 100
+BASE_SIZE = 64
+MAX_SIZE = 80
 INIT_LR = 0.1
-EPOCHS = 70
+EPOCHS = 10
 ANGLES = [-20, -15, -10, -5, 5, 10, 15, 20]
 SCALES_X = [0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2]
 SCALES_Y = [0.8, 0.85, 0.9, 0.95, 1.05, 1.1, 1.15, 1.2]
@@ -34,10 +34,23 @@ def get_model_2():
     nn_model = Sequential()
     nn_model.add(
         Dense(MAX_SIZE * MAX_SIZE, input_shape=(MAX_SIZE * MAX_SIZE,), kernel_initializer="normal", activation="relu"))
+    nn_model.add(Dropout(0.2, noise_shape=None, seed=None))
     nn_model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
     nn_model.compile(loss="categorical_crossentropy", optimizer=sgd, metrics=["accuracy"])
 
     return nn_model
+
+def get_model_3():
+    sgd = SGD(lr=INIT_LR)
+
+    model = Sequential()
+    model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(MAX_SIZE, MAX_SIZE, 1)))
+    model.add(Conv2D(32, kernel_size=3, activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(10, kernel_initializer="normal", activation="softmax"))
+    model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+
+    return model
 
 def transform_image(image):
     image_bin = image.resize((MAX_SIZE, MAX_SIZE))
@@ -142,13 +155,14 @@ random.shuffle(all_files)
 for file_path in all_files:
     # 40 * 40 * 3 = 4800
     image = process_image(file_path)
+    image = np.reshape(image, (MAX_SIZE, MAX_SIZE, 1))
     label = file_path.split('/')[-2]
-
     data.append(image)
     labels.append(label)
 
     custom_images = augment(file_path)
     for custom_image in custom_images:
+        custom_image = np.reshape(custom_image, (MAX_SIZE, MAX_SIZE, 1))
         data.append(custom_image)
         labels.append(label)
 
@@ -162,7 +176,8 @@ trainY = lb.fit_transform(trainY)
 testY = lb.transform(testY)
 
 print("[INFO] Обучение нейронной сети...")
-nn_model = get_model_2()
+nn_model = get_model_3()
+nn_model.summary()
 
 nn_model.fit(trainX, trainY, validation_data=(testX, testY),
      epochs=EPOCHS, batch_size=32)

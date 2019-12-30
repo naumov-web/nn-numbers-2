@@ -5,8 +5,8 @@ import pickle
 import os
 from keras import backend as K
 
-BASE_SIZE = 80
-MAX_SIZE = 100
+BASE_SIZE = 64
+MAX_SIZE = 80
 
 K.clear_session()
 
@@ -56,6 +56,7 @@ class Parser(object):
 
     def parse(self, file_path):
         image = self.process_image(file_path)
+        image = np.reshape(image, (MAX_SIZE, MAX_SIZE, 1))
 
         K.clear_session()
         model_path = os.path.dirname(os.path.realpath(__file__)) + '/../network/clever_model.bin'
